@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,15 +26,21 @@ public class Venda implements Serializable{
 	
 	private double valor;
 	
+	@ManyToOne
+	@JoinColumn(name = "vendedor_id")
+	private Vendedor vendedor;
+	
 	public Venda() {
 		
 	}
 
-	public Venda(Integer id, Timestamp dataVenda, double valor) {
+	
+	public Venda(Integer id, Timestamp dataVenda, double valor, Vendedor vendedor) {
 		super();
 		this.id = id;
 		this.dataVenda = dataVenda;
 		this.valor = valor;
+		this.vendedor = vendedor;
 	}
 
 	public Integer getId() {
@@ -58,6 +66,14 @@ public class Venda implements Serializable{
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
+	
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
 
 	@Override
 	public int hashCode() {
@@ -75,6 +91,10 @@ public class Venda implements Serializable{
 		Venda other = (Venda) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
+
+
 	
 	
 	
