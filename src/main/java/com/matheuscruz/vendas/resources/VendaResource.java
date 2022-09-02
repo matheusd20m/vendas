@@ -3,29 +3,28 @@ package com.matheuscruz.vendas.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matheuscruz.vendas.domain.Venda;
+import com.matheuscruz.vendas.services.VendaService;
 
 @RestController
 @RequestMapping(value = "/vendas")
 public class VendaResource {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Venda> listar() {
+	@Autowired
+	private VendaService vendaService;
+	
+	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Venda> find(@PathVariable Integer id) {
 		
-		Venda cat1 = new Venda(1, null, 25.66);
-		Venda cat2 = new Venda(2, null, 12.97);
-		
-		List<Venda> lista = new ArrayList<>();
-		
-		lista.add(cat1);
-		lista.add(cat2);
-		
-		
-		return lista;
+		Venda obj = vendaService.find(id);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
